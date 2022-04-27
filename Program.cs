@@ -100,7 +100,7 @@ namespace Mipup
         static async Task Login(Page page)
         {
             Console.Clear();
-            Console.WriteLine("Logging in to myinstants...");
+            Console.WriteLine("Logging into myinstants...");
             var creds = GetCredentials();
             await page.GoToAsync("https://www.myinstants.com/accounts/login/?next=/new/");
             await page.TypeAsync("input[name=login]", creds[0]);
