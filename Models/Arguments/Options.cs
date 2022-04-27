@@ -19,7 +19,7 @@ namespace Mipup.Models.Arguments
         [Option('n', "name", Required = true, HelpText = "The name you want the audio to be saved as.")]
         public string Name { get; set; } = String.Empty;
 
-        [Option('u', "url", Required = true, HelpText = "URL of the youtube video for audio to cut from.")]
+        [Option('u', "url", Required = true, HelpText = "URL of the youtube video for audio to cut from. (https://www.youtube.com/watch?v=7tJi2tyGmEI)")]
         public string Url
         {
             get
@@ -36,7 +36,7 @@ namespace Mipup.Models.Arguments
             }
         }
 
-        [Option('s', "start", Required = true, HelpText = "Starting duration of the audio.")]
+        [Option('s', "start", Required = true, HelpText = "Required. Start position of the audio. (hh:mm:ss)")]
         public string StartDuration
         {
             get
