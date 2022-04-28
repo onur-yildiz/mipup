@@ -188,7 +188,7 @@ namespace Mipup
                     Console.Write("*");
                     password += keyInfo.KeyChar;
                 }
-            } while (key != ConsoleKey.Enter && password.Length > 0);
+            } while (key != ConsoleKey.Enter || password.Length == 0);
             Console.Write("\nWould you like to save your credentials for the future? (YOUR CREDENTIALS WILL BE STORED AS PLAIN TEXT) [y/N]: ");
 
             if (new string[] { "y", "Y" }.Contains(Console.ReadLine()))
