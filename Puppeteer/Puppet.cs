@@ -53,7 +53,7 @@ namespace Mipup
             await page.GoToAsync("https://www.myinstants.com/accounts/login/?next=/new/");
             await page.TypeAsync("input[name=login]", creds[0]);
             await page.TypeAsync("input[name=password]", creds[1]);
-            await page.ClickAsync("div.input-field>button[type=submit]");
+            await page.ClickAsync("button[type=submit]");
 
             //await page.WaitForNavigationAsync();
             await page.WaitForSelectorAsync("#id_name");
@@ -65,12 +65,13 @@ namespace Mipup
             Console.WriteLine("Uploading audio...");
             await page.TypeAsync("#id_name", name + Guid.NewGuid().ToString());
             var fileChooserDialogTask = page.WaitForFileChooserAsync();
-            var termsCheckbox = await page.WaitForSelectorAsync("input[type=checkbox]");
             await Task.WhenAll(fileChooserDialogTask, page.ClickAsync("input[name=sound]"));
             var fileChooser = await fileChooserDialogTask;
             await fileChooser.AcceptAsync("./media/output.mp3");
+            var termsCheckbox = await page.WaitForSelectorAsync("input[type=checkbox]");
             await page.EvaluateFunctionAsync("cb => cb.click()", termsCheckbox);
-            await page.ClickAsync("input[type=submit]");
+            await page.FocusAsync("button[type=submit]");
+            await page.Keyboard.PressAsync("Enter");
 
             //await page.WaitForNavigationAsync();
             await page.WaitForSelectorAsync("a.instant-link");
