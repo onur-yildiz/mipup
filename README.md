@@ -22,6 +22,8 @@ Console Application Tool for cutting audio from a Youtube video and uploading it
 Stores your **Myinstants** credentials as plain text **ONLY** if you **AGREE**. Otherwise you have to enter your credentials every time.\
 No **Youtube** credentials needed.
 
+**TESTED ON 05.05.2022** If Myinstants website gets updated puppet may not work correctly. Please open an issue or feel free to PR a fix if that's the case.
+
 ---
 
 *Copyright (C) 2022 Mipup 1.0.0*
