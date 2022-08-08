@@ -30,10 +30,12 @@ namespace Mipup
                 var client = await page.Target.CreateCDPSessionAsync();
                 var mouse = new Mouse(client, page.Keyboard);
 
+                var uniqueName = name + Guid.NewGuid().ToString();
+
                 Console.Clear();
                 await Login(page);
-                await Upload(page, name);
-                return await ExtractURL(page);
+                await Upload(page, uniqueName);
+                return await ExtractURL(page, uniqueName);
             }
             catch (Exception ex)
             {
@@ -63,7 +65,7 @@ namespace Mipup
         static async Task Upload(Page page, string name)
         {
             Console.WriteLine("Uploading audio...");
-            await page.TypeAsync("#id_name", name + Guid.NewGuid().ToString());
+            await page.TypeAsync("#id_name", name);
             var fileChooserDialogTask = page.WaitForFileChooserAsync();
             await Task.WhenAll(fileChooserDialogTask, page.ClickAsync("input[name=sound]"));
             var fileChooser = await fileChooserDialogTask;
@@ -78,14 +80,15 @@ namespace Mipup
             Console.WriteLine("Uploaded Audio.");
         }
 
-        static async Task<string> ExtractURL(Page page)
+        static async Task<string> ExtractURL(Page page, string name)
         {
             Console.WriteLine("Navigating to the audio page...");
-            await page.EvaluateFunctionAsync(@"
-                () => {
-                    const audioList = document.querySelectorAll('a.instant-link'); 
-                    audioList[audioList.length -1].click();
-                }
+            await page.EvaluateFunctionAsync($@"
+                () => {{
+                    const audioList = document.querySelectorAll('a.instant-link');
+                    const link = Array.from(audioList).find(a => a.innerText === '{name}')
+                    link.click();
+                }}
             ");
 
             //await page.WaitForNavigationAsync();
